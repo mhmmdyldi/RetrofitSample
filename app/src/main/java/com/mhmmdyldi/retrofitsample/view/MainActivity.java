@@ -39,7 +39,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements CredentialsDialog.ICredentialsDialogListener{
 
-//    This is Main Activity, pulllllllll test tosun
+//    This is Main Activity, Mine
 
     GithubAPI githubAPI;
     String username;
