@@ -14,6 +14,8 @@ import com.mhmmdyldi.retrofitsample.R;
 import com.mhmmdyldi.retrofitsample.TwitterApi;
 import com.mhmmdyldi.retrofitsample.dataTwitter.OAuthToken;
 import com.mhmmdyldi.retrofitsample.dataTwitter.UserDetails;
+import com.mhmmdyldi.retrofitsample.model.CalorieDto;
+import com.mhmmdyldi.retrofitsample.model.GetCaloriesRequestDto;
 
 import java.io.IOException;
 
@@ -67,11 +69,11 @@ public class MainActivityTwitter extends AppCompatActivity {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request originalRequest = chain.request();
-                Request.Builder builder = originalRequest.newBuilder().header("Authorization",
-                        token != null ? token.getAuthorization() : credentials);
-
-                Request newRequest = builder.build();
-                return chain.proceed(newRequest);
+//                Request.Builder builder = originalRequest.newBuilder().header("Authorization",
+//                        token != null ? token.getAuthorization() : credentials);
+//
+//                Request newRequest = builder.build();
+                return chain.proceed(originalRequest);
             }
         }).build();
 
@@ -87,7 +89,9 @@ public class MainActivityTwitter extends AppCompatActivity {
     public void onClicked(View view) {
         switch (view.getId()) {
             case R.id.request_token_button:
-                twitterApi.postCredentials("client_credentials").enqueue(tokenCallback);
+//                twitterApi.postCredentials("client_credentials").enqueue(tokenCallback);
+                GetCaloriesRequestDto requestDto = new GetCaloriesRequestDto(0);
+                twitterApi.getCalorie(requestDto).enqueue(calorieDtoCallback);
                 break;
             case R.id.request_user_details_button:
                 String editTextInput = usernameEditText.getText().toString();
@@ -142,6 +146,19 @@ public class MainActivityTwitter extends AppCompatActivity {
         @Override
         public void onFailure(Call<UserDetails> call, Throwable t) {
             t.printStackTrace();
+        }
+    };
+
+
+    Callback<CalorieDto> calorieDtoCallback = new Callback<CalorieDto>() {
+        @Override
+        public void onResponse(Call<CalorieDto> call, retrofit2.Response<CalorieDto> response) {
+            Log.i("test", "onResponse: ");
+        }
+
+        @Override
+        public void onFailure(Call<CalorieDto> call, Throwable t) {
+            Log.i("test", "onError: ");
         }
     };
 }
