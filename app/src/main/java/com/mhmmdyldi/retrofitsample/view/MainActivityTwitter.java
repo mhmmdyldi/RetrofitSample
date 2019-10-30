@@ -71,7 +71,7 @@ public class MainActivityTwitter extends AppCompatActivity {
                 Request originalRequest = chain.request();
 //                Request.Builder builder = originalRequest.newBuilder().header("Authorization",
 //                        token != null ? token.getAuthorization() : credentials);
-//
+//local
 //                Request newRequest = builder.build();
                 return chain.proceed(originalRequest);
             }
